@@ -147,7 +147,7 @@ export default function Home() {
             <NavbarLogo />
             <MobileNavToggle isOpen={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
           </MobileNavHeader>
-          <MobileNavMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}>
+          <MobileNavMenu isOpen={isMobileMenuOpen}>
             {navItems.map((item, idx) => (
               <a key={idx} href={item.link} onClick={() => setIsMobileMenuOpen(false)} className="text-[#D1D0D0] text-lg font-medium">
                 {item.name}

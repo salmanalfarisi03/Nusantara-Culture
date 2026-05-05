@@ -157,7 +157,7 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
             <NavbarLogo />
             <MobileNavToggle isOpen={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
           </MobileNavHeader>
-          <MobileNavMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}>
+          <MobileNavMenu isOpen={isMobileMenuOpen}>
             {navItems.map((item, idx) => (
               <a key={idx} href={item.link} onClick={() => setIsMobileMenuOpen(false)} className="text-[#D1D0D0] text-base font-medium py-1">
                 {item.name}
