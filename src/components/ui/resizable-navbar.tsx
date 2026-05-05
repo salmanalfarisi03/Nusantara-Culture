@@ -187,11 +187,9 @@ export function MobileNavToggle({
 export function MobileNavMenu({
   isOpen,
   children,
-  onClose,
 }: {
   isOpen: boolean;
   children: React.ReactNode;
-  onClose: () => void;
 }) {
   return (
     <AnimatePresence>

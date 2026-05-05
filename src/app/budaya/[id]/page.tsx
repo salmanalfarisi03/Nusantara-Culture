@@ -9,8 +9,27 @@ import {
   MobileNavHeader, MobileNavToggle, MobileNavMenu,
 } from '@/components/ui/resizable-navbar';
 
+interface Artifact {
+  img: string;
+  title: string;
+  subtitle: string;
+}
+
+interface CultureData {
+  heroImg?: string;
+  heroVideo?: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  contentTitle: string;
+  contentText: string;
+  contentImg: string;
+  artifacts: [Artifact, Artifact, Artifact];
+  videoTitle: string;
+  ytUrl: string;
+}
+
 // ─── Culture Data ──────────────────────────────────────────────────────────────
-const cultureDetails: Record<string, any> = {
+const cultureDetails: Record<string, CultureData> = {
   gayo: {
     heroVideo: "/assets/videos/Aceh.mp4",
     heroTitle: "Gayo Harmoni Pegunungan",

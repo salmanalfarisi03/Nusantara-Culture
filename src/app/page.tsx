@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import { useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Indonesia from '@react-map/indonesia';
 import Testimonials from '../components/Testimonials';
@@ -109,7 +109,7 @@ export default function Home() {
     return () => window.removeEventListener('resize', handleResize);
   }, [scrollYProgress]);
 
-  const navOpacity = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
+  // Unused: const navOpacity = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
 
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
 
