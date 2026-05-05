@@ -1,10 +1,10 @@
-# 🏛️ Budaya Nusantara - Complete Design System & Documentation
+# Budaya Nusantara - Complete Design System & Documentation
 
 Selamat datang di dokumentasi lengkap proyek **Budaya Nusantara**. Dokumentasi ini dirancang agar Anda dapat mendesain aset visual secara konsisten di Figma, Spline, atau tools desain lainnya agar selaras dengan implementasi kode saat ini.
 
 ---
 
-## 🎨 Design Identity (Aesthetic)
+## Design Identity (Aesthetic)
 Website ini mengusung tema **"Premium Cultural Archive"** dengan perpaduan *Modern Minimalism* dan *Traditional Earthy Tones*.
 
 ### 1. Typography (Tipografi)
@@ -37,7 +37,7 @@ Sistem warna dibagi menjadi dua skema utama: **Dark Mode (Primary)** dan **Light
 
 ---
 
-## 🖼️ Asset Specifications (Panduan Gambar & Animasi)
+## Asset Specifications (Panduan Gambar & Animasi)
 
 ### 1. Hero Scroll Sequence
 Terletak di `/public/frames/`. Ini adalah nyawa dari homepage.
@@ -58,7 +58,7 @@ Terletak di `/public/assets/images/`.
 
 ---
 
-## 🧱 Component Structure (Struktur Komponen)
+## Component Structure (Struktur Komponen)
 
 ### 1. Interactive Map
 Menggunakan `@react-map/indonesia`. 
@@ -73,7 +73,7 @@ Floating navbar yang berubah transparansinya saat scroll.
 
 ---
 
-## 🛠️ Update via Code (Cheat Sheet)
+## Update via Code (Cheat Sheet)
 
 | Task | File Path | Code Variable |
 | :--- | :--- | :--- |
