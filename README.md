@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏛️ Budaya Nusantara - Complete Design System & Documentation
 
-## Getting Started
+Selamat datang di dokumentasi lengkap proyek **Budaya Nusantara**. Dokumentasi ini dirancang agar Anda dapat mendesain aset visual secara konsisten di Figma, Spline, atau tools desain lainnya agar selaras dengan implementasi kode saat ini.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🎨 Design Identity (Aesthetic)
+Website ini mengusung tema **"Premium Cultural Archive"** dengan perpaduan *Modern Minimalism* dan *Traditional Earthy Tones*.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. Typography (Tipografi)
+Kami menggunakan perpaduan dua font Google yang memberikan kesan elegan sekaligus modern:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Font Family | Usage | Karakter |
+| :--- | :--- | :--- |
+| **Playfair Display** | Headings, Titles, Hero Text | Serif, Mewah, Tradisional, Elegan. |
+| **Inter** | Body Text, Navigation, Metadata | Sans-serif, Bersih, Modern, Keterbacaan tinggi. |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Weight yang digunakan:**
+- Playfair Display: `400` (Regular), `700` (Bold)
+- Inter: `300` (Light), `400` (Regular), `500` (Medium), `700` (Bold)
 
-## Learn More
+### 2. Color Palette (Palet Warna)
+Sistem warna dibagi menjadi dua skema utama: **Dark Mode (Primary)** dan **Light Accent**.
 
-To learn more about Next.js, take a look at the following resources:
+#### **Core Colors (Dark Mode)**
+- **Deep Black**: `#050505` (Background Utama)
+- **Pure Black**: `#000000` (Section Overlay)
+- **Silver Cloud**: `#D1D0D0` (Text Utama, Contrast Background)
+- **Warm Grey**: `#988686` (Subtext, Border, Secondary Text)
+- **Deep Taupe**: `#5C4E4E` (Muted Elements, Map Color)
+- **Forest Moss**: `#44541c` (Selection Color, Interactive Accents)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### **Light Mode (Gallery Section)**
+- **Background**: `#D1D0D0`
+- **Text**: `#000000`
+- **Accent Text**: `#5C4E4E`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🖼️ Asset Specifications (Panduan Gambar & Animasi)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 1. Hero Scroll Sequence
+Terletak di `/public/frames/`. Ini adalah nyawa dari homepage.
+- **Resolusi**: `1920x1080px` (Wajib konsisten untuk semua frame).
+- **Naming**: `ezgif-frame-XXX.jpg` (misal: `ezgif-frame-001.jpg`).
+- **Total Frame**: Saat ini `240` frame. Jika Anda menambah/mengurangi, update `FRAME_COUNT` di `src/app/page.tsx`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 2. Culture Hero Video
+Terletak di `/public/assets/videos/`.
+- **Format**: `.mp4`.
+- **Ratio**: `16:9` atau Full Screen.
+- **Size**: Usahakan di bawah 5MB (Gunakan Handbrake atau Tool kompresi untuk performa).
+
+### 3. Artifact & Gallery Images
+Terletak di `/public/assets/images/`.
+- **Ratio**: `4:5` (Potret) untuk artefak, `16:9` atau `3:2` untuk galeri.
+- **Format**: `.jpg` atau `.webp` (Sangat direkomendasikan).
+
+---
+
+## 🧱 Component Structure (Struktur Komponen)
+
+### 1. Interactive Map
+Menggunakan `@react-map/indonesia`. 
+- Warna default wilayah: `#5C4E4E` (Deep Taupe).
+- Warna saat hover: `#D1D0D0` (Silver).
+- Label teks pulau menggunakan font **Serif (Playfair Display)** dengan opacity 0.9.
+
+### 2. Resizable Navbar
+Floating navbar yang berubah transparansinya saat scroll.
+- **Logo**: Menggunakan teks Playfair Display atau logo grafis.
+- **Buttons**: Outline style dengan tracking lebar (`tracking-widest`).
+
+---
+
+## 🛠️ Update via Code (Cheat Sheet)
+
+| Task | File Path | Code Variable |
+| :--- | :--- | :--- |
+| **Ganti Jumlah Frame** | `src/app/page.tsx` | `const FRAME_COUNT = 240;` |
+| **Ganti Konten Budaya** | `src/app/budaya/[id]/page.tsx` | `const cultureDetails = { ... }` |
+| **Update Nama Navigasi** | `src/app/page.tsx` | `const navItems = [ ... ]` |
+| **Ganti Meta Title/Desc** | `src/app/layout.tsx` | `export const metadata = { ... }` |
+
+---
+
+## 💡 Tips Desain di Figma/Spline
+1. **Spline**: Jika mendesain scene 3D, export sebagai **Image Sequence** daripada Video untuk kontrol scroll yang lebih presisi (menghemat memori browser).
+2. **Figma**: Gunakan **Auto Layout** dengan spacing kelipatan 4 atau 8 (misal: gap 16px, 32px, 64px) untuk menjaga konsistensi dengan Tailwind CSS.
+3. **Contrast**: Pastikan teks `#D1D0D0` tetap terbaca di atas background sequence. Gunakan gradient overlay hitam jika diperlukan (sudah ada di kode).
+
+---
+*Dibuat untuk mempermudah kolaborasi antara Desain dan Engineering.*
