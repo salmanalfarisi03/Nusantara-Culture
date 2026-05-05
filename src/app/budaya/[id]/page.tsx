@@ -40,7 +40,7 @@ const cultureDetails: Record<string, CultureData> = {
 Filosofi alam ini terejawantahkan secara nyata dalam Kerawang Gayo seni sulam tradisional yang motifnya merupakan abstraksi dari elemen semesta dan tatanan sosial. Alam Gayo mengajarkan hukum keseimbangan yang mutlak: manusia mengambil secukupnya dari bumi, dan bumi membalasnya dengan kelimpahan yang tak terhingga. Di sini, alam tidak hanya dihidupi, tetapi juga dihormati sebagai saksi bisu dari sejarah panjang perlawanan dan ketahanan budaya.`,
     contentImg: "/assets/images/gayoaceh1.jpg",
     artifacts: [
-      { img: "/assets/images/GayoAceh3.jpg", title: "Ritual Didong Gayo", subtitle: "Seni tutur yang memadukan puisi, nyanyian, dan tepukan tangan kolektif sebagai wujud solidaritas." },
+      { img: "/assets/images/gayoAceh3.jpg", title: "Ritual Didong Gayo", subtitle: "Seni tutur yang memadukan puisi, nyanyian, dan tepukan tangan kolektif sebagai wujud solidaritas." },
       { img: "/assets/images/gayoaceh2.jpg", title: "Perkebunan Kopi di Awan", subtitle: "Cita rasa kopi Arabika Gayo yang lahir dari ketinggian dan kesejukan alam pegunungan Aceh." },
       { img: "/assets/images/gayoaceh4.jpg", title: "Negeri di Atas Awan", subtitle: "Pemandangan perkebunan dan desa yang diselimuti kabut pagi yang magis di Dataran Tinggi Gayo." }
     ],

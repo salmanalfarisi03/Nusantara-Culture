@@ -137,7 +137,7 @@ export default function Home() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="primary" onClick={() => document.getElementById('map-section')?.scrollIntoView()}>
+            <NavbarButton variant="primary" onClick={() => router.push('/budaya/gayo')}>
               Mulai Jelajah
             </NavbarButton>
           </div>
@@ -153,7 +153,7 @@ export default function Home() {
                 {item.name}
               </a>
             ))}
-            <NavbarButton variant="primary" className="w-full mt-4" onClick={() => setIsMobileMenuOpen(false)}>
+            <NavbarButton variant="primary" className="w-full mt-4" onClick={() => { router.push('/budaya/gayo'); setIsMobileMenuOpen(false); }}>
               Mulai Jelajah
             </NavbarButton>
           </MobileNavMenu>
@@ -215,52 +215,54 @@ export default function Home() {
             <p className="text-[#988686] font-sans text-lg max-w-2xl mx-auto">Jelajahi keragaman warisan bangsa dari Sabang hingga Merauke.</p>
           </div>
 
-          <div className="relative w-full aspect-[2/1] bg-[#5C4E4E]/20 rounded-xl overflow-hidden shadow-2xl border border-[#5C4E4E]/50 flex items-center justify-center p-2">
-
-            {/* Indonesia Map */}
-            <div className="w-full max-w-5xl cursor-pointer z-20 relative"
-              onMouseLeave={() => setHoveredRegion(null)}
-              onMouseOver={(e) => {
-                const target = e.target as HTMLElement;
-                if (target.tagName.toLowerCase() === 'path' && target.id) {
-                  handleProvinceHover(target.id.split('-')[0]);
-                }
-              }}
-            >
-              <Indonesia type="select-single" size={1100} mapColor="#5C4E4E" strokeColor="#000000" strokeWidth={1} hoverColor="#D1D0D0" cityColors={getCityColors()} onSelect={(p) => p && !nonIndonesian.includes(p) && router.push(`/budaya/${provinceRegionMap[p]}`)} disableHover={true} />
-
-              {/* SVG overlay for island name labels — positioned over the map */}
-              <svg
-                className="absolute inset-0 w-full h-full pointer-events-none z-30"
-                viewBox="0 0 1100 550"
-                xmlns="http://www.w3.org/2000/svg"
+          {/* Scrollable Container for Mobile Map */}
+          <div className="w-full overflow-x-auto pb-8 custom-scrollbar">
+            <div className="relative min-w-[800px] md:min-w-full aspect-[2/1] bg-[#5C4E4E]/20 rounded-xl overflow-hidden shadow-2xl border border-[#5C4E4E]/50 flex items-center justify-center p-2 mx-auto">
+              {/* Indonesia Map */}
+              <div className="w-full max-w-5xl cursor-pointer z-20 relative"
+                onMouseLeave={() => setHoveredRegion(null)}
+                onMouseOver={(e) => {
+                  const target = e.target as HTMLElement;
+                  if (target.tagName.toLowerCase() === 'path' && target.id) {
+                    handleProvinceHover(target.id.split('-')[0]);
+                  }
+                }}
               >
-                {/* Sumatera */}
-                <text x="135" y="220" textAnchor="middle" fill="#D1D0D0" fontSize="14" fontFamily="serif" fontWeight="bold" opacity="0.9" style={{ textShadow: '0 1px 4px #000' }}>Sumatera</text>
-                {/* Jawa */}
-                <text x="420" y="370" textAnchor="middle" fill="#D1D0D0" fontSize="13" fontFamily="serif" fontWeight="bold" opacity="0.9">Jawa</text>
-                {/* Kalimantan */}
-                <text x="490" y="220" textAnchor="middle" fill="#D1D0D0" fontSize="14" fontFamily="serif" fontWeight="bold" opacity="0.9">Kalimantan</text>
-                {/* Sulawesi */}
-                <text x="665" y="240" textAnchor="middle" fill="#D1D0D0" fontSize="13" fontFamily="serif" fontWeight="bold" opacity="0.9">Sulawesi</text>
-                {/* Bali & NTT */}
-                <text x="560" y="390" textAnchor="middle" fill="#D1D0D0" fontSize="11" fontFamily="serif" fontWeight="bold" opacity="0.9">Bali &amp; NTT</text>
-                {/* Maluku */}
-                <text x="790" y="270" textAnchor="middle" fill="#D1D0D0" fontSize="12" fontFamily="serif" fontWeight="bold" opacity="0.9">Maluku</text>
-                {/* Papua */}
-                <text x="960" y="250" textAnchor="middle" fill="#D1D0D0" fontSize="14" fontFamily="serif" fontWeight="bold" opacity="0.9">Papua</text>
-              </svg>
-            </div>
+                <Indonesia type="select-single" size={1100} mapColor="#5C4E4E" strokeColor="#000000" strokeWidth={1} hoverColor="#D1D0D0" cityColors={getCityColors()} onSelect={(p) => p && !nonIndonesian.includes(p) && router.push(`/budaya/${provinceRegionMap[p]}`)} disableHover={true} />
 
-            {/* Hover tooltip */}
-            <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 bg-[#000000]/90 backdrop-blur-md border border-[#988686]/30 px-8 py-4 rounded-xl shadow-2xl pointer-events-none transition-all duration-500 z-40 ${activeCulture ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}>
-              {activeCulture && (
-                <div className="text-center">
-                  <h3 className="font-playfair text-[#D1D0D0] text-2xl tracking-wide">{activeCulture.title}</h3>
-                  <p className="font-sans text-[#988686] text-sm mt-1">{activeCulture.desc}</p>
-                  <p className="font-sans text-[#988686]/60 text-xs mt-2 uppercase tracking-widest">Klik untuk membaca sejarah</p>
-                </div>
-              )}
+                {/* SVG overlay for island name labels — positioned over the map */}
+                <svg
+                  className="absolute inset-0 w-full h-full pointer-events-none z-30"
+                  viewBox="0 0 1100 550"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  {/* Sumatera */}
+                  <text x="135" y="220" textAnchor="middle" fill="#D1D0D0" fontSize="14" fontFamily="serif" fontWeight="bold" opacity="0.9" style={{ textShadow: '0 1px 4px #000' }}>Sumatera</text>
+                  {/* Jawa */}
+                  <text x="420" y="370" textAnchor="middle" fill="#D1D0D0" fontSize="13" fontFamily="serif" fontWeight="bold" opacity="0.9">Jawa</text>
+                  {/* Kalimantan */}
+                  <text x="490" y="220" textAnchor="middle" fill="#D1D0D0" fontSize="14" fontFamily="serif" fontWeight="bold" opacity="0.9">Kalimantan</text>
+                  {/* Sulawesi */}
+                  <text x="665" y="240" textAnchor="middle" fill="#D1D0D0" fontSize="13" fontFamily="serif" fontWeight="bold" opacity="0.9">Sulawesi</text>
+                  {/* Bali & NTT */}
+                  <text x="560" y="390" textAnchor="middle" fill="#D1D0D0" fontSize="11" fontFamily="serif" fontWeight="bold" opacity="0.9">Bali &amp; NTT</text>
+                  {/* Maluku */}
+                  <text x="790" y="270" textAnchor="middle" fill="#D1D0D0" fontSize="12" fontFamily="serif" fontWeight="bold" opacity="0.9">Maluku</text>
+                  {/* Papua */}
+                  <text x="960" y="250" textAnchor="middle" fill="#D1D0D0" fontSize="14" fontFamily="serif" fontWeight="bold" opacity="0.9">Papua</text>
+                </svg>
+              </div>
+
+              {/* Hover tooltip */}
+              <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 bg-[#000000]/90 backdrop-blur-md border border-[#988686]/30 px-8 py-4 rounded-xl shadow-2xl pointer-events-none transition-all duration-500 z-40 ${activeCulture ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}>
+                {activeCulture && (
+                  <div className="text-center">
+                    <h3 className="font-playfair text-[#D1D0D0] text-2xl tracking-wide">{activeCulture.title}</h3>
+                    <p className="font-sans text-[#988686] text-sm mt-1">{activeCulture.desc}</p>
+                    <p className="font-sans text-[#988686]/60 text-xs mt-2 uppercase tracking-widest">Klik untuk membaca sejarah</p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
