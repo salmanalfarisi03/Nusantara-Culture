@@ -216,10 +216,15 @@ export default function Home() {
           </div>
 
           {/* Scrollable Container for Mobile Map */}
-          <div className="w-full overflow-x-auto pb-8 custom-scrollbar">
-            <div className="relative min-w-[800px] md:min-w-full aspect-[2/1] bg-[#5C4E4E]/20 rounded-xl overflow-hidden shadow-2xl border border-[#5C4E4E]/50 flex items-center justify-center p-2 mx-auto">
+          <div className="w-full overflow-x-auto pb-8 custom-scrollbar relative">
+            {/* Swipe Hint for Mobile */}
+            <div className="md:hidden flex items-center justify-center gap-2 text-[#988686] text-xs font-sans uppercase tracking-widest mb-4 animate-pulse">
+              <span>← Geser untuk melihat peta →</span>
+            </div>
+            
+            <div className="relative min-w-[1100px] bg-[#5C4E4E]/20 rounded-xl overflow-hidden shadow-2xl border border-[#5C4E4E]/50 flex items-center justify-center p-4">
               {/* Indonesia Map */}
-              <div className="w-full max-w-5xl cursor-pointer z-20 relative"
+              <div className="w-[1100px] h-[550px] cursor-pointer z-20 relative"
                 onMouseLeave={() => setHoveredRegion(null)}
                 onMouseOver={(e) => {
                   const target = e.target as HTMLElement;
