@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import { useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import { useScroll, useMotionValueEvent } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Indonesia from '@react-map/indonesia';
 import Testimonials from '../components/Testimonials';
@@ -26,7 +26,7 @@ const provinceRegionMap: Record<string, string> = {
 };
 const nonIndonesian = ['Sabah', 'Sarawak', 'Brunei Darussalam', 'Timor-Leste'];
 
-export const cultures = [
+const cultures = [
   { id: "gayo", title: "Gayo, Aceh", desc: "Sejuknya kabut tanah Gayo, pesona Tari Saman, dan aroma kopi yang mendunia.", yt: "https://www.youtube.com/embed/qnBvXXIhMGMo", top: "25%", left: "15%", image: "/assets/images/MasjidAceh.jpg" },
   { id: "dayak", title: "Dayak Kenyah", desc: "Kedalaman magis hutan Kalimantan, ukiran khas, dan kearifan lokal menjaga alam.", yt: "https://www.youtube.com/embed/IzOo7XdbqFU", top: "45%", left: "40%", image: "/assets/images/Kaltim.jpg" },
   { id: "sumba", title: "Sumba, NTT", desc: "Hamparan sabana liar, kuda Sandalwood, dan tenun ikat Marapu yang melegenda.", yt: "https://www.youtube.com/embed/QsMZhytMebE", top: "70%", left: "55%", image: "/assets/images/Sumba.jpg" },
