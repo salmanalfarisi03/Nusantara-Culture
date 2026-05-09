@@ -254,19 +254,7 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
 
       {/* ── Hero ── */}
       <section className="relative z-10 w-full h-screen flex items-center justify-center text-center overflow-hidden">
-        {data.heroVideo ? (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover -z-10"
-          >
-            <source src={data.heroVideo} type="video/mp4" />
-          </video>
-        ) : (
-          <img src={data.heroImg} alt={data.heroTitle} className="absolute inset-0 w-full h-full object-cover -z-10" />
-        )}
+        {/* Background MP4/Image removed to let the interactive canvas shine and reduce lag */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/20 to-transparent h-full" />
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#000000] to-transparent" />
         <div className="relative z-10 max-w-3xl px-4">
@@ -369,7 +357,9 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
         </div>
       </section>
 
-      <Footer />
+      <div className="relative z-20 bg-[#000000] border-t border-white/10">
+        <Footer />
+      </div>
     </div>
   );
 }
