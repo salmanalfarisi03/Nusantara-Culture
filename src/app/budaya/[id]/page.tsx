@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/resizable-navbar';
 
 const FRAME_COUNT = 240;
-const currentFrame = (index: number) => `/bg2/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
+const currentFrame = (index: number) => `/v2/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
 
 interface Artifact {
   img: string;
