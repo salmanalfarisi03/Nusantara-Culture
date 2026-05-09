@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import { useScroll, useMotionValueEvent } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Footer from '@/components/Footer';
 import {
@@ -8,6 +9,9 @@ import {
   NavbarLogo, NavbarButton,
   MobileNavHeader, MobileNavToggle, MobileNavMenu,
 } from '@/components/ui/resizable-navbar';
+
+const FRAME_COUNT = 240;
+const currentFrame = (index: number) => `/bg2/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
 
 interface Artifact {
   img: string;
@@ -33,11 +37,11 @@ const cultureDetails: Record<string, CultureData> = {
   gayo: {
     heroVideo: "/assets/videos/Aceh.mp4",
     heroTitle: "Gayo Harmoni Pegunungan",
-    heroSubtitle: "Menyelami harmoni di mana kabut pegunungan memeluk erat tradisi leluhur, melahirkan mahakarya ritmis tubuh dan simfoni cita rasa yang menyatukan peradaban.",
+    heroSubtitle: "Menyelami harmoni di mana kabut pegunungan memeluk erat tradisi leluhur, melahirkan mahakarya ritmis tubuh and simfoni cita rasa yang menyatukan peradaban.",
     contentTitle: "Kanvas Semesta dan Filosofi Ruang",
     contentText: `Tersembunyi di dalam pelukan sabuk pegunungan Bukit Barisan, Dataran Tinggi Gayo bukan sekadar lanskap geografis, melainkan rahim spiritual yang merawat keseimbangan hidup masyarakatnya. Udara dingin yang menyelimuti ketenangan Danau Laut Tawar dan rimbunnya hutan pinus membentuk karakter masyarakat Gayo yang tangguh, adaptif, namun bersahaja.
 
-Filosofi alam ini terejawantahkan secara nyata dalam Kerawang Gayo seni sulam tradisional yang motifnya merupakan abstraksi dari elemen semesta dan tatanan sosial. Alam Gayo mengajarkan hukum keseimbangan yang mutlak: manusia mengambil secukupnya dari bumi, dan bumi membalasnya dengan kelimpahan yang tak terhingga. Di sini, alam tidak hanya dihidupi, tetapi juga dihormati sebagai saksi bisu dari sejarah panjang perlawanan dan ketahanan budaya.`,
+Filosofi alam ini terejawantahkan secara nyata dalam Kerawang Gayo seni sulam tradisional yang motifnya merupakan abstraksi dari elemen semesta dan tatanan sosial. Alam Gayo mengajarkan hukum keseimbangan yang mutlak: manusia mengambil secukupnya dari bumi, and bumi membalasnya dengan kelimpahan yang tak terhingga. Di sini, alam tidak hanya dihidupi, tetapi juga dihormati sebagai saksi bisu dari sejarah panjang perlawanan dan ketahanan budaya.`,
     contentImg: "/assets/images/gayoaceh1.jpg",
     artifacts: [
       { img: "/assets/images/gayoaceh3.jpg", title: "Ritual Didong Gayo", subtitle: "Seni tutur yang memadukan puisi, nyanyian, dan tepukan tangan kolektif sebagai wujud solidaritas." },
@@ -51,14 +55,14 @@ Filosofi alam ini terejawantahkan secara nyata dalam Kerawang Gayo seni sulam tr
     heroImg: "https://images.unsplash.com/photo-1616801962383-7d7274070a25?auto=format&fit=crop&q=80&w=2000",
     heroVideo: "/assets/videos/Dayak.mp4",
     heroTitle: "Dayak Spirit of Kalimantan",
-    heroSubtitle: "Menjelajahi ritme kuno Borneo. Sebuah suaka bagi keanekaragaman hayati, warisan leluhur, dan narasi suci yang teranyam erat dalam napas hutan hujan tropis.",
+    heroSubtitle: "Menyelami ritme kuno Borneo. Sebuah suaka bagi keanekaragaman hayati, warisan leluhur, and narasi suci yang teranyam erat dalam napas hutan hujan tropis.",
     contentTitle: "Sang Penjaga Kanopi dan Kehidupan Sungai",
-    contentText: "Selama berabad-abad, labirin sungai yang membelah jantung Kalimantan telah menjadi urat nadi bagi komunitas Dayak Kenyah yang tangguh. Rumah Lamin, sebuah mahakarya arsitektur kayu yang megah, bukan sekadar tempat bernaung, melainkan episentrum budaya tempat nilai-nilai gotong royong, tarian magis, dan filosofi hidup selaras dengan alam terus dirawat. Di sini, setiap ukiran dan jalinan manik adalah doa yang diwariskan untuk menjaga keseimbangan semesta.",
+    contentText: "Selama berabad-abad, labirin sungai yang membelah jantung Kalimantan telah menjadi urat nadi bagi komunitas Dayak Kenyah yang tangguh. Rumah Lamin, sebuah mahakarya arsitektur kayu yang megah, bukan sekadar tempat bernaung, melainkan episentrum budaya tempat nilai-nilai gotong royong, tarian magis, and filosofi hidup selaras dengan alam terus dirawat. Di sini, setiap ukiran and jalinan manik adalah doa yang diwariskan untuk menjaga keseimbangan semesta.",
     contentImg: "/assets/images/Dayak1.jpg",
     artifacts: [
-      { img: "/assets/images/Dayak2.jpg", title: "Penjaga Rimba Kalimantan", subtitle: "Orangutan sebagai simbol keseimbangan alam dan kelestarian hutan hujan tropis Borneo." },
-      { img: "/assets/images/Dayak3.jpg", title: "Kemegahan Rumah Lamin", subtitle: "Arsitektur tradisional Dayak yang menjadi simbol kebersamaan dan persaudaraan lintas generasi." },
-      { img: "/assets/images/Dayak4.jpg", title: "Nadi Sungai Mahakam", subtitle: "Aliran air yang menjadi urat nadi kehidupan, transportasi, dan sumber pangan bagi suku Dayak." }
+      { img: "/assets/images/Dayak2.jpg", title: "Penjaga Rimba Kalimantan", subtitle: "Orangutan sebagai simbol keseimbangan alam and kelestarian hutan hujan tropis Borneo." },
+      { img: "/assets/images/Dayak3.jpg", title: "Kemegahan Rumah Lamin", subtitle: "Arsitektur tradisional Dayak yang menjadi simbol kebersamaan and persaudaraan lintas generasi." },
+      { img: "/assets/images/Dayak4.jpg", title: "Nadi Sungai Mahakam", subtitle: "Aliran air yang menjadi urat nadi kehidupan, transportasi, and sumber pangan bagi suku Dayak." }
     ],
     videoTitle: "Suara dari Jantung Borneo",
     ytUrl: "https://www.youtube.com/embed/IzOo7XdbqFU"
@@ -67,16 +71,16 @@ Filosofi alam ini terejawantahkan secara nyata dalam Kerawang Gayo seni sulam tr
     heroImg: "https://images.unsplash.com/photo-1589139855581-80a5666da818?auto=format&fit=crop&q=80&w=2000",
     heroVideo: "/assets/videos/SumbaVid.mp4",
     heroTitle: "Sumba Tanah Marapu",
-    heroSubtitle: "Sebuah dunia yang liar dan magis, tempat legenda kuno berpadu dengan ritme kehidupan sehari-hari yang terjalin erat dalam setiap helai kain tenun.",
+    heroSubtitle: "Sebuah dunia yang liar and magis, tempat legenda kuno berpadu dengan ritme kehidupan sehari-hari yang terjalin erat dalam setiap helai kain tenun.",
     contentTitle: "Jejak Para Leluhur",
-    contentText: "Sumba adalah tanah di mana waktu seolah berhenti. Dari sabana yang luas hingga tradisi megalitik yang masih terjaga, pulau ini menawarkan perjalanan spiritual yang mendalam. Tenun Sumba bukan sekadar kain, melainkan kitab suci yang ditenun dengan doa dan harapan bagi para leluhur.",
+    contentText: "Sumba adalah tanah di mana waktu seolah berhenti. Dari sabana yang luas hingga tradisi megalitik yang masih terjaga, pulau ini menawarkan perjalanan spiritual yang mendalam. Tenun Sumba bukan sekadar kain, melainkan kitab suci yang ditenun dengan doa and harapan bagi para leluhur.",
     contentImg: "/assets/images/Sumba1.jpg",
     artifacts: [
       { img: "/assets/images/Sumba.jpg", title: "Hamparan Sabana Purba", subtitle: "Bentang alam ikonik Sumba yang menjadi rumah bagi kuda-kuda sandelwood yang bebas berlari." },
-      { img: "/assets/images/Sumba4.jpg", title: "Tradisi Berkuda Pasola", subtitle: "Upacara syukur dan ketangkasan berkuda yang berakar kuat pada kepercayaan Marapu." },
+      { img: "/assets/images/Sumba4.jpg", title: "Tradisi Berkuda Pasola", subtitle: "Upacara syukur and ketangkasan berkuda yang berakar kuat pada kepercayaan Marapu." },
       { img: "/assets/images/Sumba5.jpg", title: "Kampung Adat Ratenggaro", subtitle: "Desa dengan rumah atap menjulang tinggi, saksi bisu keteguhan menjaga tradisi megalitik." }
     ],
-    videoTitle: "Perjalanan Melalui Savana dan Lautan",
+    videoTitle: "Perjalanan Melalui Savana and Lautan",
     ytUrl: "https://www.youtube.com/embed/QsMZhytMebE"
   },
   banda: {
@@ -85,11 +89,11 @@ Filosofi alam ini terejawantahkan secara nyata dalam Kerawang Gayo seni sulam tr
     heroTitle: "Banda Jejak Jalur Rempah",
     heroSubtitle: "Sebuah konstelasi pulau yang pernah merombak peta dunia. Menyatukan memori sejarah yang pekat dengan magisnya lanskap vulkanik nusantara.",
     contentTitle: "Episentrum Semesta Rempah",
-    contentText: "Banda Neira adalah saksi bisu perebutan rempah dunia. Namun di balik sejarahnya yang kelam, ia menyimpan keindahan bawah laut dan tradisi yang tak lekang oleh waktu. Dari tarian Cakalele hingga perahu Kora-Kora, Banda adalah perpaduan antara keberanian dan kedamaian.",
+    contentText: "Banda Neira adalah saksi bisu perebutan rempah dunia. Namun di balik sejarahnya yang kelam, ia menyimpan keindahan bawah laut and tradisi yang tak lekang oleh waktu. Dari tarian Cakalele hingga perahu Kora-Kora, Banda adalah perpaduan antara keberanian and kedamaian.",
     contentImg: "/assets/images/Bandaneira1.jpg",
     artifacts: [
       { img: "/assets/images/Bandaneira2.jpg", title: "Pesisir Biru Banda", subtitle: "Keindahan pantai yang tenang dengan latar belakang Gunung Api Banda yang megah." },
-      { img: "/assets/images/Bandaneira3.jpg", title: "Tarian Perang Cakalele", subtitle: "Ekspresi keberanian dan penghormatan kepada pahlawan melalui gerak ritmik yang transendental." },
+      { img: "/assets/images/Bandaneira3.jpg", title: "Tarian Perang Cakalele", subtitle: "Ekspresi keberanian and penghormatan kepada pahlawan melalui gerak ritmik yang transendental." },
       { img: "/assets/images/Bandaneira4.jpg", title: "Dermaga Sejarah", subtitle: "Gerbang masuk menuju Kepulauan Banda yang menyimpan ribuan kisah perdagangan rempah masa lalu." }
     ],
     videoTitle: "Bisikan Kepulauan Rempah-rempah",
@@ -99,14 +103,14 @@ Filosofi alam ini terejawantahkan secara nyata dalam Kerawang Gayo seni sulam tr
     heroImg: "https://images.unsplash.com/photo-1627557451016-17b07c8d9c22?auto=format&fit=crop&q=80&w=2000",
     heroVideo: "/assets/videos/PapuaVidio.mp4",
     heroTitle: "Papua Cahaya Timur",
-    heroSubtitle: "Sebuah suaka peradaban di mana kabut abadi memeluk tebing raksasa, dan tradisi manusia pegunungan berdetak selaras dengan napas bumi.",
+    heroSubtitle: "Sebuah suaka peradaban di mana kabut abadi memeluk tebing raksasa, and tradisi manusia pegunungan berdetak selaras dengan napas bumi.",
     contentTitle: "Jantung Zamrud Jayawijaya",
-    contentText: "Papua adalah permata terakhir Nusantara. Dengan hutan yang masih perawan dan laut yang penuh kehidupan, ia adalah simbol dari keagungan alam. Kebudayaan Papua yang kaya, dari Noken hingga tarian adat, adalah bentuk syukur atas kelimpahan semesta yang tak terhingga.",
+    contentText: "Papua adalah permata terakhir Nusantara. Dengan hutan yang masih perawan and laut yang penuh kehidupan, ia adalah simbol dari keagungan alam. Kebudayaan Papua yang kaya, dari Noken hingga tarian adat, adalah bentuk syukur atas kelimpahan semesta yang tak terhingga.",
     contentImg: "/assets/images/PapuaBudaya1.jpg",
     artifacts: [
       { img: "/assets/images/PapuaBudaya2.jpg", title: "Labirin Karst Raja Ampat", subtitle: "Gugusan pulau karst yang membentuk formasi unik di tengah jernihnya laut biru toska." },
       { img: "/assets/images/PapuaBudaya3.jpg", title: "Surga di Ujung Timur", subtitle: "Keindahan alam yang menjadikannya salah satu titik biodiversitas tertinggi di dunia." },
-      { img: "/assets/images/PapuaBudaya4.jpg", title: "Semangat Tarian Adat", subtitle: "Gerak komunal yang merayakan persatuan dan hubungan harmonis masyarakat Papua dengan alam." }
+      { img: "/assets/images/PapuaBudaya4.jpg", title: "Semangat Tarian Adat", subtitle: "Gerak komunal yang merayakan persatuan and hubungan harmonis masyarakat Papua dengan alam." }
     ],
     videoTitle: "Ritme Mistik dari Timur",
     ytUrl: "https://www.youtube.com/embed/PaEhtx1jlV0"
@@ -122,6 +126,66 @@ const navItems = [
 export default function CultureDetail({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const imagesRef = useRef<HTMLImageElement[]>([]);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  const { scrollYProgress } = useScroll();
+
+  useEffect(() => {
+    const loadedImages: HTMLImageElement[] = [];
+    let loadedCount = 0;
+
+    for (let i = 1; i <= FRAME_COUNT; i++) {
+      const img = new Image();
+      img.src = currentFrame(i);
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === FRAME_COUNT) setImagesLoaded(true);
+        if (i === 1 && canvasRef.current) drawFrame(0);
+      };
+      loadedImages.push(img);
+    }
+    imagesRef.current = loadedImages;
+  }, []);
+
+  const drawFrame = (frameIndex: number) => {
+    if (!canvasRef.current || !imagesRef.current[frameIndex]) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.fillStyle = '#050505';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const img = imagesRef.current[frameIndex];
+    if (!img.complete) return;
+
+    const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+    const x = (canvas.width / 2) - (img.width / 2) * scale;
+    const y = (canvas.height / 2) - (img.height / 2) * scale;
+
+    ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+  };
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const frameIndex = Math.min(FRAME_COUNT - 1, Math.floor(latest * FRAME_COUNT));
+    requestAnimationFrame(() => drawFrame(frameIndex));
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (canvasRef.current) {
+        canvasRef.current.width = window.innerWidth;
+        canvasRef.current.height = window.innerHeight;
+        const frameIndex = Math.min(FRAME_COUNT - 1, Math.floor(scrollYProgress.get() * FRAME_COUNT));
+        drawFrame(frameIndex);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, [scrollYProgress]);
 
   const cultureKeys = Object.keys(cultureDetails);
   const currentIndex = cultureKeys.indexOf(params.id);
@@ -139,7 +203,15 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="bg-[#D1D0D0] min-h-screen relative flex flex-col text-[#000000]">
+    <div className="bg-[#000000] min-h-screen relative flex flex-col text-[#D1D0D0] selection:bg-[#44541c]/30 selection:text-[#D1D0D0]">
+      {!imagesLoaded && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#050505]">
+          <div className="text-[#FFFFE0] font-playfair text-2xl animate-pulse">Memuat Perjalanan...</div>
+        </div>
+      )}
+      
+      <canvas ref={canvasRef} className="fixed inset-0 w-full h-full object-cover z-0" />
+      <div className="fixed inset-0 z-[1] bg-gradient-to-b from-[#000000] via-transparent to-[#000000] pointer-events-none opacity-60" />
 
       {/* ── Navbar ── */}
       <Navbar>
@@ -147,7 +219,7 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="secondary" onClick={() => router.push('/')}>
+            <NavbarButton variant="primary" onClick={() => router.push('/')}>
               ← Beranda
             </NavbarButton>
           </div>
@@ -163,7 +235,7 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
                 {item.name}
               </a>
             ))}
-            <NavbarButton variant="secondary" className="w-full mt-2" onClick={() => { router.push('/'); setIsMobileMenuOpen(false); }}>
+            <NavbarButton variant="primary" className="w-full mt-2" onClick={() => { router.push('/'); setIsMobileMenuOpen(false); }}>
               ← Beranda
             </NavbarButton>
           </MobileNavMenu>
@@ -171,21 +243,22 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
       </Navbar>
 
       {/* ── Hero ── */}
-      <section className="relative w-full h-[60vh] md:h-[85vh] flex items-center justify-center text-center mt-16 overflow-hidden">
+      <section className="relative z-10 w-full h-screen flex items-center justify-center text-center overflow-hidden">
         {data.heroVideo ? (
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover -z-10"
           >
             <source src={data.heroVideo} type="video/mp4" />
           </video>
         ) : (
-          <img src={data.heroImg} alt={data.heroTitle} className="absolute inset-0 w-full h-full object-cover" />
+          <img src={data.heroImg} alt={data.heroTitle} className="absolute inset-0 w-full h-full object-cover -z-10" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/80 via-[#000000]/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/20 to-transparent h-full" />
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#000000] to-transparent" />
         <div className="relative z-10 max-w-3xl px-4">
           <p className="font-sans text-[#988686] uppercase tracking-[0.3em] text-xs font-bold mb-4">BUDAYA NUSANTARA</p>
           <h1 className="font-playfair text-5xl md:text-7xl font-bold text-[#D1D0D0] mb-6 drop-shadow-lg">{data.heroTitle}</h1>
@@ -196,27 +269,24 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
       </section>
 
       {/* ── Living History ── */}
-      <section className="max-w-6xl mx-auto w-full px-6 py-24 md:py-32 flex flex-col md:flex-row items-center gap-16">
+      <section className="relative z-10 max-w-6xl mx-auto w-full px-6 py-24 md:py-32 flex flex-col md:flex-row items-center gap-16">
         <div className="w-full md:w-1/2">
-          <img src={data.contentImg} alt="Culture Element" className="w-full aspect-[4/5] object-cover shadow-xl" />
+          <img src={data.contentImg} alt="Culture Element" className="w-full aspect-[4/5] object-cover shadow-2xl border border-[#5C4E4E]/30" />
         </div>
         <div className="w-full md:w-1/2 flex flex-col items-start">
-          <p className="font-sans text-[#5C4E4E] uppercase tracking-widest text-xs font-bold mb-4">HISTORY</p>
-          <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-[#000000]">{data.contentTitle}</h2>
-          <p className="font-sans text-[#5C4E4E] leading-relaxed mb-8 text-sm md:text-base">
+          <p className="font-sans text-black/60 uppercase tracking-widest text-xs font-bold mb-4">HISTORY</p>
+          <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-black">{data.contentTitle}</h2>
+          <p className="font-sans text-black leading-relaxed mb-8 text-sm md:text-base">
             {data.contentText}
           </p>
-          {/* <button className="px-6 py-3 border border-[#988686] text-[#000000] font-sans text-xs uppercase tracking-widest hover:bg-[#5C4E4E] hover:text-[#D1D0D0] transition-all duration-300">
-            Read Full History →
-          </button> */}
         </div>
       </section>
 
       {/* ── Curated Artifacts ── */}
-      <section className="max-w-6xl mx-auto w-full px-6 pb-24 md:pb-32">
+      <section className="relative z-10 max-w-6xl mx-auto w-full px-6 pb-24 md:pb-32">
         <div className="text-center mb-16">
-          <p className="font-sans text-[#5C4E4E] uppercase tracking-widest text-xs font-bold mb-4">GALERI</p>
-          <h2 className="font-playfair text-4xl font-bold text-[#000000]">Galeri Budaya</h2>
+          <p className="font-sans text-[#988686] uppercase tracking-widest text-xs font-bold mb-4">GALERI</p>
+          <h2 className="font-playfair text-4xl font-bold text-[#D1D0D0]">Galeri Budaya</h2>
         </div>
 
         <div className="flex flex-col md:flex-row gap-4 h-auto md:h-[600px]">
@@ -250,18 +320,13 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
                   <p className="font-sans text-[#D1D0D0]/70 text-xs">{data.artifacts[2].subtitle}</p>
                 </div>
               </div>
-              {/* <div className="flex-1 bg-[#5C4E4E] flex flex-col items-center justify-center text-[#D1D0D0] p-6 text-center cursor-pointer hover:bg-[#000000] transition-colors">
-                <div className="w-10 h-10 rounded-full border border-[#D1D0D0]/40 flex items-center justify-center mb-3 text-xl">+</div>
-                <h3 className="font-playfair font-bold text-base">Curator's Notes</h3>
-                <p className="font-sans text-xs text-[#D1D0D0]/50 mt-1">Explore the archive.</p>
-              </div> */}
             </div>
           </div>
         </div>
       </section>
 
       {/* ── Prev / Next Navigation ── */}
-      <section className="w-full max-w-6xl mx-auto px-6 pb-16 flex justify-between items-center">
+      <section className="relative z-10 w-full max-w-6xl mx-auto px-6 pb-16 flex justify-between items-center">
         {prevId ? (
           <button onClick={() => router.push(`/budaya/${prevId}`)}
             className="flex items-center gap-2 px-6 py-3 bg-[#000000] text-[#D1D0D0] hover:bg-[#5C4E4E] transition-colors font-sans text-sm uppercase tracking-widest font-bold">
@@ -277,10 +342,10 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
       </section>
 
       {/* ── Video Section ── */}
-      <section className="w-full bg-[#000000] text-[#D1D0D0] py-24 md:py-32 px-6">
+      <section className="relative z-10 w-full text-black py-24 md:py-32 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="font-sans text-[#988686] uppercase tracking-widest text-xs font-bold mb-4">EXPERIENCE</p>
-          <h2 className="font-playfair text-3xl md:text-5xl font-bold mb-12">{data.videoTitle}</h2>
+          <p className="font-sans text-black/60 uppercase tracking-widest text-xs font-bold mb-4">EXPERIENCE</p>
+          <h2 className="font-playfair text-3xl md:text-5xl font-bold mb-12 text-black">{data.videoTitle}</h2>
           <div className="relative pt-[56.25%] w-full rounded-lg overflow-hidden shadow-2xl bg-[#5C4E4E]/20 border border-[#988686]/30">
             <iframe
               className="absolute inset-0 w-full h-full"
