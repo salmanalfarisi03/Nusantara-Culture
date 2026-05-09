@@ -10,8 +10,8 @@ import {
   MobileNavHeader, MobileNavToggle, MobileNavMenu,
 } from '@/components/ui/resizable-navbar';
 
-const FRAME_COUNT = 120;
-const currentFrame = (index: number) => `/v2/ezgif-frame-${(index * 2).toString().padStart(3, '0')}.jpg`;
+const FRAME_COUNT = 220;
+const currentFrame = (index: number) => `/v2/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
 
 interface Artifact {
   img: string;
@@ -209,7 +209,7 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
           <div className="text-[#FFFFE0] font-playfair text-2xl animate-pulse">Memuat Perjalanan...</div>
         </div>
       )}
-      
+
       <canvas ref={canvasRef} className="fixed inset-0 w-full h-full object-cover z-0" />
       <div className="fixed inset-0 z-[1] bg-gradient-to-b from-[#000000] via-transparent to-[#000000] pointer-events-none opacity-60" />
 
