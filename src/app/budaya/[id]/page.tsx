@@ -14,6 +14,7 @@ const FRAME_COUNT = 240;
 // Dynamic frame helper
 const getFramePath = (id: string, index: number) => {
   const folders: Record<string, string> = {
+    'gayo': 'aceh',
     'dayak': 'dayak',
     'sumba': 'sumba',
   };
