@@ -13,7 +13,11 @@ import {
 const FRAME_COUNT = 240;
 // Dynamic frame helper
 const getFramePath = (id: string, index: number) => {
-  const folder = id === 'dayak' ? 'dayak' : 'v2';
+  const folders: Record<string, string> = {
+    'dayak': 'dayak',
+    'sumba': 'sumba',
+  };
+  const folder = folders[id] || 'v2';
   return `/${folder}/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
 };
 
