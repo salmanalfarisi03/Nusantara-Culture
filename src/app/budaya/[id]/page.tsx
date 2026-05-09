@@ -275,9 +275,9 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
           <img src={data.contentImg} alt="Culture Element" className="w-full aspect-[4/5] object-cover shadow-2xl border border-[#5C4E4E]/30" />
         </div>
         <div className="w-full md:w-1/2 flex flex-col items-start">
-          <p className="font-sans text-black/60 uppercase tracking-widest text-xs font-bold mb-4">HISTORY</p>
-          <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-black">{data.contentTitle}</h2>
-          <p className="font-sans text-black leading-relaxed mb-8 text-sm md:text-base">
+          <p className="font-sans text-[#988686] uppercase tracking-widest text-xs font-bold mb-4">HISTORY</p>
+          <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6 text-[#D1D0D0]">{data.contentTitle}</h2>
+          <p className="font-sans text-[#D1D0D0]/80 leading-relaxed mb-8 text-sm md:text-base">
             {data.contentText}
           </p>
         </div>
@@ -343,10 +343,10 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
       </section>
 
       {/* ── Video Section ── */}
-      <section className="relative z-10 w-full text-black py-24 md:py-32 px-6">
+      <section className="relative z-10 w-full py-24 md:py-32 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="font-sans text-black/60 uppercase tracking-widest text-xs font-bold mb-4">EXPERIENCE</p>
-          <h2 className="font-playfair text-3xl md:text-5xl font-bold mb-12 text-black">{data.videoTitle}</h2>
+          <p className="font-sans text-[#988686] uppercase tracking-widest text-xs font-bold mb-4">EXPERIENCE</p>
+          <h2 className="font-playfair text-3xl md:text-5xl font-bold mb-12 text-[#D1D0D0]">{data.videoTitle}</h2>
           <div className="relative pt-[56.25%] w-full rounded-lg overflow-hidden shadow-2xl bg-[#5C4E4E]/20 border border-[#988686]/30">
             <iframe
               className="absolute inset-0 w-full h-full"
