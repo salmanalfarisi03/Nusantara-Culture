@@ -11,7 +11,11 @@ import {
 } from '@/components/ui/resizable-navbar';
 
 const FRAME_COUNT = 240;
-const currentFrame = (index: number) => `/v2/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
+// Dynamic frame helper
+const getFramePath = (id: string, index: number) => {
+  const folder = id === 'dayak' ? 'dayak' : 'v2';
+  return `/${folder}/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
+};
 
 interface Artifact {
   img: string;
@@ -138,7 +142,7 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
 
     for (let i = 1; i <= FRAME_COUNT; i++) {
       const img = new Image();
-      img.src = currentFrame(i);
+      img.src = getFramePath(params.id, i);
       img.onload = () => {
         loadedCount++;
         if (loadedCount === FRAME_COUNT) setImagesLoaded(true);
