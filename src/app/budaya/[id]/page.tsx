@@ -136,6 +136,7 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
@@ -181,6 +182,15 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     const frameIndex = Math.min(FRAME_COUNT - 1, Math.floor(latest * FRAME_COUNT));
     requestAnimationFrame(() => drawFrame(frameIndex));
+    
+    // Pause video if scrolled past hero (approx 10% of scroll) to reduce lag
+    if (videoRef.current) {
+      if (latest > 0.05 && !videoRef.current.paused) {
+        videoRef.current.pause();
+      } else if (latest <= 0.05 && videoRef.current.paused) {
+        videoRef.current.play();
+      }
+    }
   });
 
   useEffect(() => {
@@ -253,10 +263,23 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
       </Navbar>
 
       {/* ── Hero ── */}
-      <section className="relative z-10 w-full h-screen flex items-center justify-center text-center overflow-hidden">
-        {/* Background MP4/Image removed to let the interactive canvas shine and reduce lag */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/20 to-transparent h-full" />
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#000000] to-transparent" />
+      <section className="relative z-20 w-full h-screen flex items-center justify-center text-center overflow-hidden bg-black">
+        {data.heroVideo ? (
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover z-0"
+          >
+            <source src={data.heroVideo} type="video/mp4" />
+          </video>
+        ) : (
+          <img src={data.heroImg} alt={data.heroTitle} className="absolute inset-0 w-full h-full object-cover z-0" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/20 to-transparent h-full z-[1]" />
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#000000] to-transparent z-[2]" />
         <div className="relative z-10 max-w-3xl px-4">
           <p className="font-sans text-[#988686] uppercase tracking-[0.3em] text-xs font-bold mb-4">BUDAYA NUSANTARA</p>
           <h1 className="font-playfair text-5xl md:text-7xl font-bold text-[#D1D0D0] mb-6 drop-shadow-lg">{data.heroTitle}</h1>
