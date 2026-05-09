@@ -161,7 +161,8 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
     const img = imagesRef.current[frameIndex];
     if (!img.complete) return;
 
-    const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+    const baseScale = Math.max(canvas.width / img.width, canvas.height / img.height);
+    const scale = baseScale * 1.1; // Zoom in 10% to crop out the Veo watermark at the bottom right
     const x = (canvas.width / 2) - (img.width / 2) * scale;
     const y = (canvas.height / 2) - (img.height / 2) * scale;
 
