@@ -10,8 +10,8 @@ import {
   MobileNavHeader, MobileNavToggle, MobileNavMenu,
 } from '@/components/ui/resizable-navbar';
 
-const FRAME_COUNT = 240;
-const currentFrame = (index: number) => `/v2/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
+const FRAME_COUNT = 120;
+const currentFrame = (index: number) => `/bgbudaya/ezgif-frame-${(index * 2).toString().padStart(3, '0')}.jpg`;
 
 interface Artifact {
   img: string;

@@ -13,8 +13,8 @@ const navItems = [
   { name: "Artikel", link: "#cards-section" },
 ];
 
-const FRAME_COUNT = 240;
-const currentFrame = (index: number) => `/frames/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
+const FRAME_COUNT = 120;
+const currentFrame = (index: number) => `/frames/ezgif-frame-${(index * 2).toString().padStart(3, '0')}.jpg`;
 
 const provinceRegionMap: Record<string, string> = {
   'Aceh': 'gayo', 'Sumatera Utara': 'gayo', 'Sumatera Barat': 'gayo', 'Riau': 'gayo', 'Kepulauan Riau': 'gayo', 'Jambi': 'gayo', 'Bengkulu': 'gayo', 'Sumatera Selatan': 'gayo', 'Bangka Belitung': 'gayo', 'Lampung': 'gayo',
