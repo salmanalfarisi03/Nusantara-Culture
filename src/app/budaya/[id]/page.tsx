@@ -69,8 +69,8 @@ Filosofi alam ini terejawantahkan secara nyata dalam Kerawang Gayo seni sulam tr
     contentText: "Selama berabad-abad, labirin sungai yang membelah jantung Kalimantan telah menjadi urat nadi bagi komunitas Dayak Kenyah yang tangguh. Rumah Lamin, sebuah mahakarya arsitektur kayu yang megah, bukan sekadar tempat bernaung, melainkan episentrum budaya tempat nilai-nilai gotong royong, tarian magis, and filosofi hidup selaras dengan alam terus dirawat. Di sini, setiap ukiran and jalinan manik adalah doa yang diwariskan untuk menjaga keseimbangan semesta.",
     contentImg: "/assets/images/Dayak1.jpg",
     artifacts: [
-      { img: "/assets/images/Dayak2.jpg", title: "Penjaga Rimba Kalimantan", subtitle: "Orangutan sebagai simbol keseimbangan alam and kelestarian hutan hujan tropis Borneo." },
-      { img: "/assets/images/Dayak3.jpg", title: "Kemegahan Rumah Lamin", subtitle: "Arsitektur tradisional Dayak yang menjadi simbol kebersamaan and persaudaraan lintas generasi." },
+      { img: "/assets/images/Dayak2.jpg", title: "Kemegahan Rumah Lamin", subtitle: "Arsitektur tradisional Dayak yang menjadi simbol kebersamaan and persaudaraan lintas generasi." },
+      { img: "/assets/images/Dayak3.jpg", title: "Penjaga Rimba Kalimantan", subtitle: "Orangutan sebagai simbol keseimbangan alam and kelestarian hutan hujan tropis Borneo." },
       { img: "/assets/images/Dayak4.jpg", title: "Nadi Sungai Mahakam", subtitle: "Aliran air yang menjadi urat nadi kehidupan, transportasi, and sumber pangan bagi suku Dayak." }
     ],
     videoTitle: "Suara dari Jantung Borneo",
@@ -182,7 +182,7 @@ export default function CultureDetail({ params }: { params: { id: string } }) {
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     const frameIndex = Math.min(FRAME_COUNT - 1, Math.floor(latest * FRAME_COUNT));
     requestAnimationFrame(() => drawFrame(frameIndex));
-    
+
     // Pause video if scrolled past hero (approx 10% of scroll) to reduce lag
     if (videoRef.current) {
       if (latest > 0.05 && !videoRef.current.paused) {
